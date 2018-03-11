@@ -1,22 +1,25 @@
-
-@app.route("/")
-def hello():
-    return "Hello World!"
-# all the imports
-import os
-import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
-The next couple lines will create the actual application instance and initialize it with the config from the same file in flaskr.py:
-
-app = Flask(__name__) # create the application instance :)
-app.config.from_object(__name__) # load config from this file , flaskr.py
-
-# Load default config and override config from an environment variable
-app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'flaskr.db'),
-    SECRET_KEY='development key',
-    USERNAME='admin',
-    PASSWORD='default'
-))
-app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+from flask import Flask 
+3 from flask import render_template 
+4 
+ 
+5 
+ 
+6 app = Flask(__name__) 
+7 app.config['TEMPLATES_AUTO_RELOAD'] = True 
+8 @app.route("/") 
+9 def index(): 
+10     return render_template("index.html") 
+11 
+ 
+12 @app.route("/contact") 
+13 def contact(): 
+14     return render_template("contact.html") 
+15 
+ 
+16 @app.after_request 
+17 def add_header(r): 
+18     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate" 
+19     r.headers["Pragma"] = "no-cache" 
+20     r.headers["Expires"] = "0" 
+21     r.headers['Cache-Control'] = 'public, max-age=0' 
+22     return r 
